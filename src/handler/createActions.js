@@ -1,0 +1,36 @@
+import isEmpty from 'lodash/isEmpty'
+import isArray from 'lodash/isArray'
+import isNil from 'lodash/isNil'
+import camelCase from 'lodash/camelCase'
+import { actionMiddleware } from './actionMiddleware'
+
+const createRequestCreator = (event, payload) => $axios({
+  ...event.api,
+  ...payload
+})
+
+const prefix = 'Action'
+
+export const createActions = (event) => {
+  if (isEmpty(event)) throw new Error('Event is empty on create actions vuex.')
+  if (!isArray(event)) throw new Error('Event is not array.')
+
+  let object = {}
+  event.forEach((item) => {
+    const { storeConfig: { action = '', eventName = '' } = {} } = item || {}
+    if (isEmpty(eventName) || isNil(eventName)) throw new Error('Required key `eventName` in store config.')
+    const actionName = isEmpty(action) || isNil(action) ? eventName : action
+
+    object = {
+      ...object,
+      [`${camelCase(actionName)}${prefix}`](store, payload) {
+        return actionMiddleware({
+          types: eventName,
+          promise: createRequestCreator(item, payload)
+        },
+        store)
+      }
+    }
+  })
+  return object
+}

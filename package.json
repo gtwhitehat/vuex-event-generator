@@ -1,0 +1,19 @@
+{
+  "name": "vuex-event-generator",
+  "version": "1.0.0",
+  "description": "vue event generator",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vuex"
+  ],
+  "author": "ib",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}
