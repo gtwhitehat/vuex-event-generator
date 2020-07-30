@@ -4,14 +4,11 @@ import isNil from 'lodash/isNil'
 import camelCase from 'lodash/camelCase'
 import { actionMiddleware } from './actionMiddleware'
 
-const createRequestCreator = (event, payload) => $axios({
-  ...event.api,
-  ...payload
-})
-
 const prefix = 'Action'
 
-export const createActions = (event) => {
+export const createActions = (event, { createRequestCreator }) => {
+  if (isNil(createRequestCreator)) throw new Error('Required function `createRequestCreator`.')
+  if (typeof createRequestCreator !== 'function') throw new Error('`createRequestCreator` is not a function.')
   if (isEmpty(event)) throw new Error('Event is empty on create actions vuex.')
   if (!isArray(event)) throw new Error('Event is not array.')
 

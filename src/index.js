@@ -1,5 +1,8 @@
-import { createActions } from './handler'
+import { createGetters, createActions, createState, createMutation } from './handler'
 
 export {
-  createActions
+  createActions,
+  createGetters,
+  createState,
+  createMutation
 }
