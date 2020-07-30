@@ -6,9 +6,9 @@ import { actionMiddleware } from './actionMiddleware'
 
 const prefix = 'Action'
 
-export const createActions = (event, { createRequestCreator }) => {
-  if (isNil(createRequestCreator)) throw new Error('Required function `createRequestCreator`.')
-  if (typeof createRequestCreator !== 'function') throw new Error('`createRequestCreator` is not a function.')
+export const createActions = (event, config) => {
+  if (isNil(config.createRequestCreator)) throw new Error('Required function `createRequestCreator`.')
+  if (typeof config.createRequestCreator !== 'function') throw new Error('`createRequestCreator` is not a function.')
   if (isEmpty(event)) throw new Error('Event is empty on create actions vuex.')
   if (!isArray(event)) throw new Error('Event is not array.')
 
@@ -23,7 +23,7 @@ export const createActions = (event, { createRequestCreator }) => {
       [`${camelCase(actionName)}${prefix}`](store, payload) {
         return actionMiddleware({
           types: eventName,
-          promise: createRequestCreator(item, payload)
+          promise: config.createRequestCreator(item, payload)
         },
         store)
       }
