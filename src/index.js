@@ -1,6 +1,13 @@
-import { createGetters, createActions, createState, createMutation } from './handler'
+import { 
+  createGetters, 
+  createActions, 
+  createState, 
+  createMutation, 
+  createPromiseAction
+ } from './handler'
 
 export {
+  createPromiseAction,
   createActions,
   createGetters,
   createState,
