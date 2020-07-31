@@ -2,7 +2,7 @@ import isEmpty from 'lodash/isEmpty'
 import isArray from 'lodash/isArray'
 import isNil from 'lodash/isNil'
 import camelCase from 'lodash/camelCase'
-import { actionMiddleware } from './actionMiddleware'
+import { createPromiseAction } from './createPromiseAction'
 
 const prefix = 'Action'
 
@@ -21,7 +21,7 @@ export const createActions = (event, config) => {
     object = {
       ...object,
       [`${camelCase(actionName)}${prefix}`](store, payload) {
-        return actionMiddleware({
+        return createPromiseAction({
           types: eventName,
           promise: config.createRequestCreator(item, payload)
         },

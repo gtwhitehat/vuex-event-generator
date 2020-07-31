@@ -2,7 +2,7 @@ import isArray from 'lodash/isArray'
 import isNil from 'lodash/isNil'
 import isEmpty from 'lodash/isEmpty'
 
-export const actionMiddleware = async (action, store) => {
+export const createPromiseAction = async (action, store) => {
   const { types, promise } = await action
   if (types) {
     if (isNil(types) || isEmpty(types)) throw new Error('Action type is empty.')

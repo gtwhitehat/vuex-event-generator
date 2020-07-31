@@ -2,12 +2,12 @@ import { createState } from './createState'
 import { createMutation } from './createMutation'
 import { createGetters } from './createGetters'
 import { createActions } from './createActions'
-import { actionMiddleware } from './actionMiddleware'
+import { createPromiseAction } from './createPromiseAction'
 
 export {
   createActions,
   createGetters,
-  actionMiddleware,
+  createPromiseAction,
   createMutation,
   createState
 }
