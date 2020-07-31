@@ -1,6 +1,7 @@
 import isArray from 'lodash/isArray'
 import isNil from 'lodash/isNil'
 import isEmpty from 'lodash/isEmpty'
+import omit from 'lodash/omit'
 
 export const createPromiseAction = async (action, store) => {
   const { types, promise } = await action
@@ -29,9 +30,8 @@ export const createPromiseAction = async (action, store) => {
       let promiseAction = promise
       if (typeof promise === 'function') promiseAction = promise()
       promiseAction.then((res) => {
-        const newResponse = isNil(res.data) ? res : res.data
-        store.commit(FULFILLED, newResponse)
-        resolve(newResponse)
+        store.commit(FULFILLED, omit(res, ['status', 'code']))
+        resolve(res)
       }).catch((err) => {
         if (err && err.response && err.response.data) {
           store.commit(REJECTED, err.response)
