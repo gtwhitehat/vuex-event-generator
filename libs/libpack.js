@@ -877,11 +877,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: createActions, createGetters, createState, createMutation */
+/*! exports provided: createPromiseAction, createActions, createGetters, createState, createMutation */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _handler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./handler */ \"./src/handler/index.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"createActions\", function() { return _handler__WEBPACK_IMPORTED_MODULE_0__[\"createActions\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"createGetters\", function() { return _handler__WEBPACK_IMPORTED_MODULE_0__[\"createGetters\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"createState\", function() { return _handler__WEBPACK_IMPORTED_MODULE_0__[\"createState\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"createMutation\", function() { return _handler__WEBPACK_IMPORTED_MODULE_0__[\"createMutation\"]; });\n\n\n\n\n\n//# sourceURL=webpack://libpack/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _handler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./handler */ \"./src/handler/index.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"createPromiseAction\", function() { return _handler__WEBPACK_IMPORTED_MODULE_0__[\"createPromiseAction\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"createActions\", function() { return _handler__WEBPACK_IMPORTED_MODULE_0__[\"createActions\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"createGetters\", function() { return _handler__WEBPACK_IMPORTED_MODULE_0__[\"createGetters\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"createState\", function() { return _handler__WEBPACK_IMPORTED_MODULE_0__[\"createState\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"createMutation\", function() { return _handler__WEBPACK_IMPORTED_MODULE_0__[\"createMutation\"]; });\n\n\n\n\n\n//# sourceURL=webpack://libpack/./src/index.js?");
 
 /***/ })
 
