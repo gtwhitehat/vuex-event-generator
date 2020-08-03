@@ -24,7 +24,7 @@ export const createActions = (event, config = {}) => {
         async [`${camelCase(actionName)}${prefix}`](store, payload) {
           return createPromiseAction({
             types: eventName,
-            promise: config.request[`${eventName}${prefixRequest}`](item, payload)
+            promise: config.request[`${eventName}${prefixRequest}`](payload)
           },
           store)
         }
