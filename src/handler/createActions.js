@@ -8,7 +8,7 @@ const prefix = 'Action'
 const prefixRequest = 'Request'
 
 export const createActions = (event, config = {}) => {
-  if (isNil(config.request)) console.error('Required apis request.')
+  if (isNil(config.request)) console.error('Required field request in action vuex.')
   if (isEmpty(event)) throw new Error('Event is empty on create actions vuex.')
   if (!isArray(event)) throw new Error('Event is not array.')
 
