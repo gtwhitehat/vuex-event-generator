@@ -7,9 +7,8 @@ import { createPromiseAction } from './createPromiseAction'
 const prefix = 'Action'
 const prefixRequest = 'Request'
 
-export const createActions = (event, config) => {
-  if (isNil(config.request) || isEmpty(config.request)) throw new Error('Required apis request.')
-
+export const createActions = (event, config = {}) => {
+  if (isNil(config.request)) console.error('Required apis request.')
   if (isEmpty(event)) throw new Error('Event is empty on create actions vuex.')
   if (!isArray(event)) throw new Error('Event is not array.')
 
@@ -19,15 +18,16 @@ export const createActions = (event, config) => {
     if (isEmpty(eventName) || isNil(eventName)) throw new Error('Required key `eventName` in store config.')
 
     const actionName = isEmpty(action) || isNil(action) ? eventName : action
-
-    object = {
-      ...object,
-      async [`${camelCase(actionName)}${prefix}`](store, payload) {
-        return createPromiseAction({
-          types: eventName,
-          promise: config.request[`${eventName}${prefixRequest}`](item, payload)
-        },
-        store)
+    if (!isNil(config.request) && config.request[`${eventName}${prefixRequest}`]) {
+      object = {
+        ...object,
+        async [`${camelCase(actionName)}${prefix}`](store, payload) {
+          return createPromiseAction({
+            types: eventName,
+            promise: config.request[`${eventName}${prefixRequest}`](item, payload)
+          },
+          store)
+        }
       }
     }
   })
