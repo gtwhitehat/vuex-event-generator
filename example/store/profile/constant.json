@@ -1,0 +1,13 @@
+[
+  {
+    "storeConfig": {
+      "eventName": "fetchProfile",
+      "action": "fetchProfileAction",
+      "getters": "getProfile",
+      "state": {
+        "name": "profile",
+        "defaultValue": {}
+      }
+    }
+  }
+]
