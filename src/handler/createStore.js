@@ -8,7 +8,7 @@ import { createMutation } from './createMutation'
 import { createGetters } from './createGetters'
 
 export const createStore = (event, {
-  request, state = {}, actions = {}, mutations = {}, getters = {}
+  request = {}, state = {}, actions = {}, mutations = {}, getters = {}
 }) => {
   if (isNil(request)) console.error('Required field request in action vuex.')
   if (isEmpty(event)) throw new Error('Event is empty on create actions vuex.')
