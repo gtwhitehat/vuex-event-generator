@@ -4,8 +4,8 @@ import isNil from 'lodash/isNil'
 import camelCase from 'lodash/camelCase'
 import { createPromiseAction } from './createPromiseAction'
 
-const prefix = 'Action'
-const prefixRequest = 'Request'
+const suffix = 'Action'
+const suffixRequest = 'Request'
 
 export const createActions = (event, config = {}) => {
   if (isNil(config.request)) console.error('Required field request in action vuex.')
@@ -18,13 +18,13 @@ export const createActions = (event, config = {}) => {
     if (isEmpty(eventName) || isNil(eventName)) throw new Error('Required key `eventName` in store config.')
 
     const actionName = isEmpty(action) || isNil(action) ? eventName : action
-    if (!isNil(config.request) && config.request[`${eventName}${prefixRequest}`]) {
+    if (!isNil(config.request) && config.request[`${eventName}${suffixRequest}`]) {
       object = {
         ...object,
-        async [`${camelCase(actionName)}${prefix}`](store, payload) {
+        async [`${camelCase(actionName)}${suffix}`](store, payload) {
           return createPromiseAction({
             types: eventName,
-            promise: config.request[`${eventName}${prefixRequest}`](payload)
+            promise: config.request[`${eventName}${suffixRequest}`](payload)
           },
           store)
         }
