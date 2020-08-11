@@ -3,10 +3,12 @@ import {
   createActions, 
   createState, 
   createMutation, 
-  createPromiseAction
+  createPromiseAction,
+  createStore
  } from './handler'
 
 export {
+  createStore,
   createPromiseAction,
   createActions,
   createGetters,
