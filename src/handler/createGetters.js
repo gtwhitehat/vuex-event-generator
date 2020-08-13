@@ -8,7 +8,14 @@ export const createGetters = (event) => {
   if (!isArray(event)) throw new Error('Event is not array.')
   let object = {}
   event.forEach((item) => {
-    const { storeConfig: { getters = '', eventName = '', state } = {} } = item || {}
+    let i = { ...item }
+    if (!isNil(item.storeConfig)) {
+      i = {
+        ...item.storeConfig
+      }
+    }
+
+    const { getters = '', eventName = '', state = {} } = i || {}
     if (isEmpty(eventName) || isNil(eventName)) throw new Error('Required key `eventName` in store config.')
     const gettersName = isEmpty(getters) || isNil(getters) ? eventName : getters
     const stateName = isEmpty(state) || isNil(state.name) ? 'response' : state.name
