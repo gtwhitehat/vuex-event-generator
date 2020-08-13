@@ -9,7 +9,7 @@ const defaultState = {
 }
 
 export const createState = (event) => {
-  if (isEmpty(event)) throw new Error('Event is empty on create state vuex.')
+  if (isEmpty(event)) console.error('Event is empty on create state vuex.')
   let object = {}
   event.forEach((item) => {
     let i = { ...item }
@@ -20,7 +20,7 @@ export const createState = (event) => {
     }
 
     const { eventName = '', state: { name = '', value = {} } = {}, api = '' } = i || {}
-    if (isEmpty(eventName) || isNil(eventName)) throw new Error('Required key `eventName` in store config.')
+    if (isEmpty(eventName) || isNil(eventName)) console.error('Required key `eventName` in store config.')
 
     let listState = {}
     if (isNil(name) || isEmpty(name)) {

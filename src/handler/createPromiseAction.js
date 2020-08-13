@@ -13,9 +13,7 @@ export const createPromiseAction = async (action, store) => {
     let REJECTED = ''
 
     // original format type.
-    if (isArray(types)) {
-      [PENDING, FULFILLED, REJECTED] = types
-    }
+    if (isArray(types)) [PENDING, FULFILLED, REJECTED] = types
 
     // new format type.
     if (!isArray(types)) {

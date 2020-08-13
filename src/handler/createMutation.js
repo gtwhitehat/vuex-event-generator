@@ -24,8 +24,16 @@ export const createMutation = (event) => {
         ...object,
         [`${eventName}_${s}`](state, payload = {}) {
           if (isNil(payload)) return
-          if (api) state[stateName].response = payload
-          else state[stateName] = payload
+          const { success = false } = payload || {}
+          if (success) {
+            if (api) {
+              state[stateName].response = payload
+              state[stateName].status = FULFILLED
+            } else state[stateName] = payload
+          } else {
+            state[stateName].error = payload
+            state[stateName].status = REJECTED
+          }
         }
       }
     })
