@@ -18,11 +18,11 @@ export const createGetters = (event) => {
     const { getters = '', eventName = '', state = {} } = i || {}
     if (isEmpty(eventName) || isNil(eventName)) throw new Error('Required key `eventName` in store config.')
     const gettersName = isEmpty(getters) || isNil(getters) ? eventName : getters
-    const stateName = isEmpty(state) || isNil(state.name) ? 'response' : state.name
+    const stateName = isEmpty(state) || isNil(state.name) ? eventName : state.name
     object = {
       ...object,
       [`${camelCase(gettersName)}`](state) {
-        return state[eventName][stateName] || {}
+        return state[stateName] || {}
       }
     }
   })
