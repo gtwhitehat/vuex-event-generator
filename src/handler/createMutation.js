@@ -24,8 +24,8 @@ export const createMutation = (event) => {
         ...object,
         [`${eventName}_${s}`](state, payload = {}) {
           if (isNil(payload)) return
-          const { success = false } = payload || {}
-          if (success) {
+          const { success = false, data = {} } = payload || {}
+          if (success || !isNil(data)) {
             if (api) {
               state[stateName].response = payload
               state[stateName].status = FULFILLED
