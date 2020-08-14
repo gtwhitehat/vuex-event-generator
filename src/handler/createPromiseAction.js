@@ -28,7 +28,8 @@ export const createPromiseAction = async (action, store) => {
       let promiseAction = promise
       if (typeof promise === 'function') promiseAction = promise()
       promiseAction.then((res) => {
-        store.commit(FULFILLED, omit(res, ['status', 'code']))
+        const response = isArray(res) ? res : omit(res, ['status', 'code'])
+        store.commit(FULFILLED, response)
         resolve(res)
       }).catch((err) => {
         if (err && err.response && err.response.data) {
