@@ -1,5 +1,6 @@
 import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
+import isArray from 'lodash/isArray'
 import { PENDING } from './status'
 
 const defaultState = {
@@ -9,29 +10,30 @@ const defaultState = {
 }
 
 export const createState = (event) => {
-  if (isEmpty(event)) console.error('Event is empty on create state vuex.')
+  if (isEmpty(event)) throw new Error('Event is empty on create state vuex.')
+  if (!isArray(event)) throw new Error('Event is not array.')
+
   let object = {}
   event.forEach((item) => {
     let i = { ...item }
-    if (!isNil(item.storeConfig)) {
-      i = {
-        ...item.storeConfig
-      }
-    }
+    if (!isNil(item.storeConfig)) i = { ...item.storeConfig }
 
     const { eventName = '', state: { name = '', value = {} } = {}, api = '' } = i || {}
     if (isEmpty(eventName) || isNil(eventName)) console.error('Required key `eventName` in store config.')
 
     let listState = {}
-    if (isNil(name) || isEmpty(name)) {
+    const setStateName = isEmpty(name) ? eventName : name
+    const valueState = isEmpty(value) ? defaultState : value
+
+    if (api) {
       listState = {
         ...listState,
-        [eventName]: defaultState
+        [setStateName]: valueState
       }
     } else {
       listState = {
         ...listState,
-        [name]: api ? defaultState : value
+        [setStateName]: valueState
       }
     }
     object = {
