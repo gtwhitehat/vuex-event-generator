@@ -11,9 +11,18 @@ export const createStore = (event, config) => {
   const {
     request = {}, state = {}, actions = {}, mutations = {}, getters = {}
   } = config || {}
-  if (isNil(config.request)) throw new Error('Required field request in action vuex.')
-  if (isEmpty(event)) throw new Error('Event is empty on create actions vuex.')
-  if (!isArray(event)) throw new Error('Event is not array.')
+  if (isNil(config.request)) {
+    console.error('Required field request in action vuex.')
+    return false
+  }
+  if (isEmpty(event)) {
+    console.error('Event is empty on create actions vuex.')
+    return false
+  }
+  if (!isArray(event)) {
+    console.error('Event is not array.')
+    return false
+  }
 
   return {
     state: () => ({

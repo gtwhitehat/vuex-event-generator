@@ -10,30 +10,38 @@ const defaultState = {
 }
 
 export const createState = (event) => {
-  if (isEmpty(event)) throw new Error('Event is empty on create state vuex.')
-  if (!isArray(event)) throw new Error('Event is not array.')
+  if (isEmpty(event)) {
+    console.error('Event is empty on create state vuex.')
+    return false
+  }
+  if (!isArray(event)) {
+    console.error('Event is not array.')
+    return false
+  }
 
   let object = {}
   event.forEach((item) => {
     let i = { ...item }
     if (!isNil(item.storeConfig)) i = { ...item.storeConfig }
 
-    const { eventName = '', state: { name = '', value = {} } = {}, api = '' } = i || {}
-    if (isEmpty(eventName) || isNil(eventName)) console.error('Required key `eventName` in store config.')
+    const { eventName = '', state: { name = '', value = defaultState } = {}, api = '' } = i || {}
+    if (isEmpty(eventName) || isNil(eventName)) {
+      console.error('Required key `eventName` in store config.')
+      return false
+    }
 
     let listState = {}
-    const setStateName = isEmpty(name) ? eventName : name
-    const valueState = isEmpty(value) ? defaultState : value
+    const setStateName = isNil(name) || isEmpty(name) ? eventName : name
 
     if (api) {
       listState = {
         ...listState,
-        [setStateName]: valueState
+        [setStateName]: value
       }
     } else {
       listState = {
         ...listState,
-        [setStateName]: valueState
+        [setStateName]: value
       }
     }
     object = {

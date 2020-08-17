@@ -8,9 +8,18 @@ const prefix = 'Action'
 const prefixRequest = 'Request'
 
 export const createActions = (event, config = {}) => {
-  if (isEmpty(event)) throw new Error('Event is empty on create actions vuex.')
-  if (!isArray(event)) throw new Error('Event is not array.')
-  if (isNil(config.request)) console.error('Required field request in action vuex.')
+  if (isEmpty(event)) {
+    console.error('Event is empty on create actions vuex.')
+    return false
+  }
+  if (!isArray(event)) {
+    console.error('Event is not array.')
+    return false
+  }
+  if (isNil(config.request)) {
+    console.error('Required field request in action vuex.')
+    return false
+  }
 
   let object = {}
   event.forEach((item) => {
@@ -18,14 +27,20 @@ export const createActions = (event, config = {}) => {
     if (!isNil(item.storeConfig)) i = { ...item.storeConfig }
 
     const { actions = '', eventName = '', api = false } = i || {}
-    if (isEmpty(eventName) || isNil(eventName)) throw new Error('Required key `eventName` in store config.')
+    if (isEmpty(eventName) || isNil(eventName)) {
+      console.error('Required key `eventName` in store config.')
+      return false
+    }
 
     const actionName = isEmpty(actions) || isNil(actions) ? eventName : actions
 
     if (actionName) {
       if (api) {
         const apiRequest = config.request[`${eventName}${prefixRequest}`]
-        if (isNil(apiRequest)) console.error(`'${eventName}${prefixRequest}' Request is not found.`)
+        if (isNil(apiRequest)) {
+          console.error(`'${eventName}${prefixRequest}' Request is not found.`)
+          return false
+        }
         // api promise action
         object = {
           ...object,
