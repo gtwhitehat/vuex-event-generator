@@ -1,6 +1,7 @@
 import isEmpty from 'lodash/isEmpty'
 import isNil from 'lodash/isNil'
 import isArray from 'lodash/isArray'
+import cloneDeep from 'lodash/cloneDeep'
 import { PENDING } from './status'
 
 const defaultState = {
@@ -10,40 +11,21 @@ const defaultState = {
 }
 
 export const createState = (event) => {
-  if (isEmpty(event)) {
-    console.error('Event is empty on create state vuex.')
-    return false
-  }
-  if (!isArray(event)) {
-    console.error('Event is not array.')
-    return false
-  }
+  if (isEmpty(event)) throw new Error('Event is empty on create state vuex.')
+  if (!isArray(event)) throw new Error('Event is not array.')
 
   let object = {}
   event.forEach((item) => {
     let i = { ...item }
     if (!isNil(item.storeConfig)) i = { ...item.storeConfig }
 
-    const { eventName = '', state: { name = '', value = defaultState } = {}, api = '' } = i || {}
-    if (isEmpty(eventName) || isNil(eventName)) {
-      console.error('Required key `eventName` in store config.')
-      return false
-    }
+    const { eventName = '', state = {}, api = false } = i || {}
+    if (isEmpty(eventName) || isNil(eventName)) console.error('Required key `eventName` in store config.')
 
     let listState = {}
-    const setStateName = isNil(name) || isEmpty(name) ? eventName : name
-
-    if (api) {
-      listState = {
-        ...listState,
-        [setStateName]: value
-      }
-    } else {
-      listState = {
-        ...listState,
-        [setStateName]: value
-      }
-    }
+    const setStateName = isEmpty(state) && isNil(state.name) ? eventName : state.name
+    const valueState = api ? cloneDeep(defaultState) : state.value
+    listState = { ...listState, [setStateName]: valueState }
     object = {
       ...object,
       ...listState
