@@ -10,41 +10,34 @@ export const createMutation = (event) => {
   if (!isArray(event)) throw new Error('Event is not array.')
 
   let object = {}
-  event.forEach((item) => {
-    let i = { ...item }
-    if (!isNil(item.storeConfig)) i = { ...item.storeConfig }
+  if (event) {
+    event.forEach((item) => {
+      let i = { ...item }
+      if (!isNil(item.storeConfig)) i = { ...item.storeConfig }
 
-    const { eventName = '', state = {}, api = false } = i || {}
-    if (isEmpty(eventName) || isNil(eventName)) console.error('Required key `eventName` in store config.')
+      const { eventName = '', state = {}, api = false } = i || {}
+      if (isEmpty(eventName) || isNil(eventName)) console.error('Required key `eventName` in store config.')
 
-    const stateName = isEmpty(state) || isNil(state.name) ? eventName : state.name
-    const isSetStateByName = !isNil(state.name)
-
-    listsStatus.forEach((status) => {
+      const stateName = isEmpty(state) || isNil(state.name) ? eventName : state.name
       if (api) {
         object = {
           ...object,
-          [`${eventName}_${status}`](state, payload = {}) {
-            if (isNil(payload)) {
-              console.error(`${eventName} payload is undefined.`)
-              return
+          [`${eventName}_${PENDING}`](state) {
+            state[stateName].status = FULFILLED
+          },
+          [`${eventName}_${FULFILLED}`](state, payload = {}) {
+            state[stateName].response = payload
+            state[stateName].status = FULFILLED
+          },
+          [`${eventName}_${REJECTED}`](state, payload) {
+            if (payload === undefined) return
+            const { status = '', statusText = '' } = payload || {}
+            state[stateName].response = {}
+            state[stateName].error = {
+              statusText,
+              status
             }
-            switch (status) {
-              case FULFILLED:
-                if (isSetStateByName) state[stateName] = payload
-                else {
-                  state[stateName].response = payload
-                  state[stateName].status = FULFILLED
-                }
-                break
-              case REJECTED:
-                state[stateName].error = payload
-                state[stateName].status = REJECTED
-                break
-              default:
-                state[stateName].response = payload
-                state[stateName].status = PENDING
-            }
+            state[stateName].status = REJECTED
           }
         }
       } else {
@@ -61,6 +54,6 @@ export const createMutation = (event) => {
         }
       }
     })
-  })
+  }
   return object
 }
