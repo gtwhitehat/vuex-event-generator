@@ -19,13 +19,15 @@ export const createMutation = (event) => {
       if (isEmpty(eventName) || isNil(eventName)) console.error('Required key `eventName` in store config.')
 
       const stateName = isEmpty(state) || isNil(state.name) ? eventName : state.name
+      if (!stateName) return
       if (api) {
         object = {
           ...object,
           [`${eventName}_${PENDING}`](state) {
             state[stateName].status = FULFILLED
           },
-          [`${eventName}_${FULFILLED}`](state, payload = {}) {
+          [`${eventName}_${FULFILLED}`](state, payload) {
+            if (payload === undefined) return
             state[stateName].response = payload
             state[stateName].status = FULFILLED
           },
@@ -43,7 +45,7 @@ export const createMutation = (event) => {
       } else {
         object = {
           ...object,
-          [`${eventName}`](state, payload = {}) {
+          [`${eventName}`](state, payload) {
             if (isNil(payload)) {
               console.error(`${eventName} payload is undefined.`)
               return
