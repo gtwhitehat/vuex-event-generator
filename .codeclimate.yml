@@ -1,0 +1,14 @@
+engines:
+  eslint:
+    enabled: true
+    config:
+      extensions:
+        - .js
+    checks:
+      complexity:
+        enabled: false
+  duplication:
+    enabled: true
+    config:
+      extensions:
+        - .js
