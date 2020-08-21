@@ -33,11 +33,12 @@ export const createMutation = (event) => {
           },
           [`${eventName}_${REJECTED}`](state, payload) {
             if (payload === undefined) return
-            const { status = '', statusText = '' } = payload || {}
+            const { status = '', statusText = '', data = {} } = payload || {}
             state[stateName].response = {}
             state[stateName].error = {
               statusText,
-              status
+              status,
+              data
             }
             state[stateName].status = REJECTED
           }
