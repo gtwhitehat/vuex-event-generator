@@ -8,8 +8,8 @@ $ yarn add https://github.com/gtwhitehat/vuex-event-generator#1.0.0
 | ------ | ------ |
 | fetchUser | fetchUserAction |
 
-### Example Call Request in Store (Api).
-*Suffix Request for call Request in store.*
+### Example Create Request Api.
+*Suffix Request for create request api.*
 | Event Name | Request |
 | ------ | ------ |
 | fetchUser | fetchUserRequest |
